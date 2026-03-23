@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Aravindan's Projects — cybersecurity tools, security research, and encryption systems.">
+  <title>Projects | Aravindan</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">&lt;<span>Aravindan</span>/&gt;</a>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="projects.html" class="active">Projects</a>
+        <a href="blog.html">Blog</a>
+        <a href="experience.html">Experience</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-overlay" id="nav-overlay"></div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <span class="section-label">// My Work</span>
+      <h1>Projects</h1>
+      <p>Security tools, encryption systems, and cybersecurity projects I've built to learn and practice.</p>
+    </div>
+  </div>
+
+  <!-- Filter & Projects -->
+  <section class="section" style="padding-top: 20px;">
+    <div class="container">
+      <div class="filter-bar fade-in">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="security">Security</button>
+        <button class="filter-btn" data-filter="cryptography">Cryptography</button>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1: Honeypot -->
+        <div class="project-card fade-in" data-category="security">
+          <div class="project-card-header">
+            <span class="project-card-badge">Security</span>
+            <h3>Honeypot Monitoring System</h3>
+            <p>A honeypot system that simulates vulnerable services and captures attacker activity. Logs login attempts,
+              IP addresses, commands, and timestamps for security analysis.</p>
+          </div>
+          <div class="project-card-body">
+            <div class="project-tech">
+              <span>Python</span><span>Linux</span><span>Socket Programming</span><span>Logging</span>
+            </div>
+          </div>
+          <div class="project-card-footer">
+            <a href="projects/honeypot-monitoring-system.html" class="btn btn-primary btn-sm">View Details</a>
+            <a href="https://github.com/Vortex-Scurge/Web_Honeypot.git" class="btn btn-outline btn-sm"
+              title="GitHub link coming soon">
+              <i class="fab fa-github"></i> Code
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 2: Image Encryption -->
+        <div class="project-card fade-in" data-category="cryptography">
+          <div class="project-card-header">
+            <span class="project-card-badge">Cryptography</span>
+            <h3>Secure Image Encryption System</h3>
+            <p>A secure image encryption tool that encrypts and decrypts images using encryption algorithms to protect
+              image data from unauthorized access.</p>
+          </div>
+          <div class="project-card-body">
+            <div class="project-tech">
+              <span>Python</span><span>Encryption Algorithms</span><span>File Handling</span>
+            </div>
+          </div>
+          <div class="project-card-footer">
+            <a href="projects/secure-image-encryption.html" class="btn btn-primary btn-sm">View Details</a>
+            <a href="https://github.com/Vortex-Scurge/secure-image-encryption" target="_blank"
+              class="btn btn-outline btn-sm">
+              <i class="fab fa-github"></i> Code
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Projects -->
+      <div style="margin-top: 60px;" class="fade-in">
+        <div class="section-header">
+          <span class="section-label">// Coming Soon</span>
+          <h2 class="section-title" style="font-size: 1.8rem;">Planned Projects</h2>
+          <div class="section-divider"></div>
+        </div>
+        <div class="achievements-grid">
+          <div class="achievement-card">
+            <div class="achievement-icon">🔑</div>
+            <div>
+              <h4>Password Manager</h4>
+              <p>Secure password manager with encryption and master password protection.</p>
+            </div>
+          </div>
+          <div class="achievement-card">
+            <div class="achievement-icon">🔍</div>
+            <div>
+              <h4>Port Scanner</h4>
+              <p>Custom port scanning tool with service detection capabilities.</p>
+            </div>
+          </div>
+          <div class="achievement-card">
+            <div class="achievement-icon">🛡️</div>
+            <div>
+              <h4>Vulnerability Scanner</h4>
+              <p>Automated vulnerability scanner for web applications.</p>
+            </div>
+          </div>
+          <div class="achievement-card">
+            <div class="achievement-icon">📡</div>
+            <div>
+              <h4>Network Monitor</h4>
+              <p>Real-time network traffic monitoring and analysis tool.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-copy">&copy; 2025 <span>Aravindan</span>. Built with passion and caffeine.</div>
+        <div class="footer-links">
+          <a href="https://github.com/Vortex-Scurge" target="_blank" aria-label="GitHub"><i
+              class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/aravindan-ravichandran-2b2144337/" target="_blank"
+            aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="mailto:aravinanravichandiran@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
