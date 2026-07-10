@@ -7,43 +7,43 @@
 
 /* ── CSS Variables ── */
 :root {
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #111111;
-  --bg-tertiary: #1a1a1a;
-  --bg-card: #0f0f0f;
-  --bg-card-hover: #161616;
-  --border-color: #1e1e1e;
-  --border-glow: rgba(0, 255, 136, 0.15);
+  --bg-primary: #050505;
+  --bg-secondary: #0a0a0a;
+  --bg-tertiary: #111111;
+  --bg-card: rgba(10, 10, 10, 0.7);
+  --bg-card-hover: rgba(15, 15, 15, 0.9);
+  --border-color: #1a2b22;
+  --border-glow: rgba(0, 255, 65, 0.3);
 
-  --text-primary: #e8e8e8;
-  --text-secondary: #a0a0a0;
-  --text-muted: #666666;
+  --text-primary: #e0e0e0;
+  --text-secondary: #909090;
+  --text-muted: #555555;
 
-  --accent: #00ff88;
-  --accent-dim: rgba(0, 255, 136, 0.1);
-  --accent-medium: rgba(0, 255, 136, 0.25);
-  --accent-secondary: #00d4ff;
-  --accent-secondary-dim: rgba(0, 212, 255, 0.1);
+  --accent: #00ff41;
+  --accent-dim: rgba(0, 255, 65, 0.1);
+  --accent-medium: rgba(0, 255, 65, 0.25);
+  --accent-secondary: #008f11;
+  --accent-secondary-dim: rgba(0, 143, 17, 0.1);
 
-  --gradient-accent: linear-gradient(135deg, #00ff88, #00d4ff);
-  --gradient-bg: linear-gradient(135deg, rgba(0,255,136,0.05), rgba(0,212,255,0.05));
+  --gradient-accent: linear-gradient(135deg, #00ff41, #008f11);
+  --gradient-bg: linear-gradient(135deg, rgba(0,255,65,0.05), rgba(0,143,17,0.05));
 
-  --font-body: 'Inter', -apple-system, sans-serif;
-  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Fira Code', monospace;
+  --font-heading: 'Fira Code', monospace;
   --font-mono: 'Fira Code', monospace;
 
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-sm: 16px;
+  --radius-md: 24px;
+  --radius-lg: 32px;
+  --radius-xl: 40px;
 
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
-  --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
-  --shadow-glow: 0 0 30px rgba(0,255,136,0.08);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.5);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.7);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.8);
+  --shadow-glow: 0 0 15px rgba(0,255,65,0.2), inset 0 0 10px rgba(0,255,65,0.05);
 
-  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 
   --nav-height: 70px;
   --container-width: 1200px;
@@ -423,6 +423,8 @@ ul, ol {
 }
 
 .about-card {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -460,6 +462,8 @@ ul, ol {
 }
 
 .skill-category {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -570,6 +574,8 @@ ul, ol {
 }
 
 .project-card {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
@@ -1562,4 +1568,395 @@ ul, ol {
   font-size: 0.85rem;
   color: var(--text-secondary);
   margin-top: 4px;
+}
+
+
+/* ── Hacker Aesthetics ── */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+}
+
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-primary);
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -2px 0 #ff00c1;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: -2px 0 #00fff9;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(42px, 9999px, 44px, 0); }
+  5% { clip: rect(12px, 9999px, 59px, 0); }
+  10% { clip: rect(48px, 9999px, 29px, 0); }
+  15.0% { clip: rect(42px, 9999px, 73px, 0); }
+  20% { clip: rect(63px, 9999px, 27px, 0); }
+  25% { clip: rect(34px, 9999px, 55px, 0); }
+  30.0% { clip: rect(86px, 9999px, 73px, 0); }
+  35% { clip: rect(20px, 9999px, 20px, 0); }
+  40% { clip: rect(26px, 9999px, 60px, 0); }
+  45% { clip: rect(25px, 9999px, 66px, 0); }
+  50% { clip: rect(57px, 9999px, 98px, 0); }
+  55.0% { clip: rect(5px, 9999px, 46px, 0); }
+  60.0% { clip: rect(82px, 9999px, 31px, 0); }
+  65% { clip: rect(54px, 9999px, 27px, 0); }
+  70% { clip: rect(28px, 9999px, 99px, 0); }
+  75% { clip: rect(45px, 9999px, 69px, 0); }
+  80% { clip: rect(23px, 9999px, 85px, 0); }
+  85.0% { clip: rect(54px, 9999px, 84px, 0); }
+  90% { clip: rect(45px, 9999px, 47px, 0); }
+  95% { clip: rect(37px, 9999px, 20px, 0); }
+  100% { clip: rect(4px, 9999px, 91px, 0); }
+}
+
+@keyframes glitch-anim2 {
+  0% { clip: rect(65px, 9999px, 100px, 0); }
+  5% { clip: rect(52px, 9999px, 74px, 0); }
+  10% { clip: rect(79px, 9999px, 85px, 0); }
+  15.0% { clip: rect(75px, 9999px, 5px, 0); }
+  20% { clip: rect(67px, 9999px, 61px, 0); }
+  25% { clip: rect(14px, 9999px, 79px, 0); }
+  30.0% { clip: rect(1px, 9999px, 66px, 0); }
+  35% { clip: rect(86px, 9999px, 30px, 0); }
+  40% { clip: rect(23px, 9999px, 98px, 0); }
+  45% { clip: rect(85px, 9999px, 72px, 0); }
+  50% { clip: rect(71px, 9999px, 75px, 0); }
+  55.0% { clip: rect(2px, 9999px, 48px, 0); }
+  60.0% { clip: rect(30px, 9999px, 16px, 0); }
+  65% { clip: rect(59px, 9999px, 50px, 0); }
+  70% { clip: rect(41px, 9999px, 62px, 0); }
+  75% { clip: rect(2px, 9999px, 82px, 0); }
+  80% { clip: rect(47px, 9999px, 73px, 0); }
+  85.0% { clip: rect(3px, 9999px, 27px, 0); }
+  90% { clip: rect(26px, 9999px, 55px, 0); }
+  95% { clip: rect(42px, 9999px, 97px, 0); }
+  100% { clip: rect(38px, 9999px, 49px, 0); }
+}
+
+/* Make inputs look like terminal */
+.form-group input, .form-group textarea {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--accent-dim);
+  color: var(--accent);
+}
+.form-group input:focus, .form-group textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-dim);
+}
+
+
+/* ── Scroll Navigation Bar ── */
+.scroll-nav {
+  position: fixed;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 1000;
+}
+
+.scroll-nav-line {
+  width: 4px;
+  height: 20px;
+  background: var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+}
+
+.scroll-nav-line:hover,
+.scroll-nav-line.active {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  height: 35px;
+}
+
+.scroll-nav-tooltip {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-10px);
+  background: var(--bg-card);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border: 1px solid var(--accent-dim);
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.scroll-nav-line:hover .scroll-nav-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+@media (max-width: 1024px) {
+  .scroll-nav {
+    display: none;
+  }
+}
+
+/* ── Mouse Spotlight Hover Effect ── */
+.project-card, .about-card, .skill-category, .timeline-card, .achievement-card, .tool-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::before, .about-card::before, .skill-category::before, .timeline-card::before, .achievement-card::before, .tool-item::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle 400px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 255, 65, 0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.project-card:hover::before, .about-card:hover::before, .skill-category:hover::before, .timeline-card:hover::before, .achievement-card:hover::before, .tool-item:hover::before {
+  opacity: 1;
+}
+
+.project-card > *, .about-card > *, .skill-category > *, .timeline-card > *, .achievement-card > *, .tool-item > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Funky Icon Shapes ── */
+.tool-icon, .skill-category-icon, .achievement-icon {
+  background: var(--accent-dim) !important;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50% !important;
+  animation: blobShape 6s linear infinite alternate;
+  color: var(--accent) !important;
+}
+
+@keyframes blobShape {
+  0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50% !important; }
+  50% { border-radius: 60% 40% 30% 70% / 50% 60% 40% 50% !important; }
+  100% { border-radius: 50% 70% 40% 60% / 60% 40% 50% 70% !important; }
+}
+
+.btn {
+  border-radius: 30px !important; /* pill shape buttons */
+}
+
+/* ── Interactive Image Gallery ── */
+.gallery-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 450px;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  perspective: 1200px;
+}
+
+@media (max-width: 768px) {
+  .gallery-container { height: 250px; }
+}
+
+.gallery-stack {
+  position: relative;
+  width: 75%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.gallery-card {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+  opacity: 0;
+  pointer-events: none;
+  background: var(--bg-secondary);
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.gallery-card.active {
+  transform: translateZ(0) translateY(0) scale(1);
+  opacity: 1;
+  z-index: 10;
+  pointer-events: auto;
+  border-color: var(--accent);
+  box-shadow: var(--shadow-glow);
+}
+
+.gallery-card.next-1 {
+  transform: translateZ(-60px) translateX(20px) scale(0.95);
+  opacity: 0.7;
+  z-index: 9;
+}
+
+.gallery-card.next-2 {
+  transform: translateZ(-120px) translateX(40px) scale(0.90);
+  opacity: 0.4;
+  z-index: 8;
+}
+
+.gallery-card.prev-1 {
+  transform: translateZ(60px) translateX(-150%) rotateY(-30deg) scale(0.9);
+  opacity: 0;
+  z-index: 11;
+}
+
+.gallery-expand {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: rgba(0,0,0,0.8);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  z-index: 20;
+  font-size: 1.2rem;
+}
+
+.gallery-expand:hover {
+  background: var(--accent);
+  color: #000;
+  transform: scale(1.1);
+}
+
+.gallery-nav {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 20;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.gallery-nav:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 15px var(--accent-dim);
+}
+
+/* ── Lightbox Overlay ── */
+.lightbox-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(5, 5, 5, 0.95);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.lightbox-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 85%;
+  max-height: 85vh;
+  animation: lightboxZoom 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes lightboxZoom {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 85vh;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 40px rgba(0,255,65,0.15);
+  object-fit: contain;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: -10px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.lightbox-close:hover {
+  color: #ff4444;
+  transform: rotate(90deg);
 }

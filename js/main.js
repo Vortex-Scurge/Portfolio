@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initTypedText();
   initContactForm();
   initFilters();
+  initSpotlight();
+  initScrollNav();
 });
 
 /* ── Navbar ── */
@@ -92,7 +94,8 @@ function initScrollAnimations() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove('visible');
       }
     });
   }, {
@@ -288,3 +291,214 @@ function initFilters() {
     });
   });
 }
+
+/* ── Text Scramble Effect ── */
+class TextScramble {
+  constructor(el) {
+    this.el = el;
+    this.chars = '!<>-_\\/[]{}—=+*^?#________';
+    this.update = this.update.bind(this);
+  }
+  setText(newText) {
+    const oldText = this.el.innerText;
+    const length = Math.max(oldText.length, newText.length);
+    const promise = new Promise((resolve) => this.resolve = resolve);
+    this.queue = [];
+    for (let i = 0; i < length; i++) {
+      const from = oldText[i] || '';
+      const to = newText[i] || '';
+      const start = Math.floor(Math.random() * 40);
+      const end = start + Math.floor(Math.random() * 40);
+      this.queue.push({ from, to, start, end });
+    }
+    cancelAnimationFrame(this.frameRequest);
+    this.frame = 0;
+    this.update();
+    return promise;
+  }
+  update() {
+    let output = '';
+    let complete = 0;
+    for (let i = 0, n = this.queue.length; i < n; i++) {
+      let { from, to, start, end, char } = this.queue[i];
+      if (this.frame >= end) {
+        complete++;
+        output += to;
+      } else if (this.frame >= start) {
+        if (!char || Math.random() < 0.28) {
+          char = this.randomChar();
+          this.queue[i].char = char;
+        }
+        output += `<span class="dud" style="color:var(--text-muted)">${char}</span>`;
+      } else {
+        output += from;
+      }
+    }
+    this.el.innerHTML = output;
+    if (complete === this.queue.length) {
+      this.resolve();
+    } else {
+      this.frameRequest = requestAnimationFrame(this.update);
+      this.frame++;
+    }
+  }
+  randomChar() {
+    return this.chars[Math.floor(Math.random() * this.chars.length)];
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const titles = document.querySelectorAll('h1, h2.section-title');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (!entry.target.hasAttribute('data-scrambled')) {
+          if (!entry.target.dataset.original) {
+              entry.target.dataset.original = entry.target.innerText;
+          }
+          const fx = new TextScramble(entry.target);
+          fx.setText(entry.target.dataset.original);
+          entry.target.setAttribute('data-scrambled', 'true');
+        }
+      } else {
+        entry.target.removeAttribute('data-scrambled');
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  titles.forEach(t => observer.observe(t));
+});
+
+function initSpotlight() {
+  const cards = document.querySelectorAll('.project-card, .about-card, .skill-category, .timeline-card, .achievement-card, .tool-item');
+  cards.forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
+}
+
+function initScrollNav() {
+  const lines = document.querySelectorAll('.scroll-nav-line');
+  if (!lines.length) return;
+
+  // Click to scroll
+  lines.forEach(line => {
+    line.addEventListener('click', () => {
+      const targetId = line.getAttribute('data-target');
+      const targetSection = document.querySelector(targetId);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Highlight on scroll
+  window.addEventListener('scroll', () => {
+    let current = '';
+    const sections = document.querySelectorAll('section[id]');
+    sections.forEach(section => {
+      const top = section.offsetTop - window.innerHeight / 2.5;
+      if (window.scrollY >= top) {
+        current = '#' + section.getAttribute('id');
+      }
+    });
+
+    lines.forEach(line => {
+      line.classList.remove('active');
+      if (line.getAttribute('data-target') === current) {
+        line.classList.add('active');
+      }
+    });
+    
+    // Fallback if at top
+    if (window.scrollY < 100 && lines.length > 0) {
+       lines.forEach(l => l.classList.remove('active'));
+       lines[0].classList.add('active');
+    }
+  });
+  
+  // Trigger once to set initial state
+  window.dispatchEvent(new Event('scroll'));
+}
+
+/* ── Gallery & Lightbox Logic ── */
+function initGallery() {
+  const stacks = document.querySelectorAll('.gallery-stack');
+  stacks.forEach(stack => {
+    updateGallery(stack, 0);
+  });
+}
+
+function changeGalleryImage(btn, dir) {
+  const stack = btn.closest('.gallery-container').querySelector('.gallery-stack');
+  const cards = stack.querySelectorAll('.gallery-card');
+  let activeIndex = Array.from(cards).findIndex(c => c.classList.contains('active'));
+  if (activeIndex === -1) activeIndex = 0;
+  
+  let newIndex = (activeIndex + dir + cards.length) % cards.length;
+  updateGallery(stack, newIndex, dir, activeIndex);
+}
+
+function updateGallery(stack, newIndex, dir=1, oldIndex=-1) {
+  const cards = stack.querySelectorAll('.gallery-card');
+  const len = cards.length;
+  
+  cards.forEach((card, i) => {
+    card.className = 'gallery-card'; // reset classes
+    
+    if (i === newIndex) {
+      card.classList.add('active');
+    } else if (i === (newIndex + 1) % len) {
+      card.classList.add('next-1');
+    } else if (i === (newIndex + 2) % len) {
+      card.classList.add('next-2');
+    } else if (dir > 0 && i === oldIndex) {
+      card.classList.add('prev-1');
+    } else if (dir < 0 && i === oldIndex) {
+      // It went backwards, the old one goes to next-1, which is handled above if it's newIndex+1.
+      // But we want it to look smooth
+    }
+  });
+}
+
+function openLightbox(btn) {
+  const imgSrc = btn.previousElementSibling.src;
+  const overlay = document.getElementById('lightbox-overlay');
+  const lightboxImg = document.getElementById('lightbox-img');
+  
+  if (overlay && lightboxImg) {
+    lightboxImg.src = imgSrc;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeLightbox(e) {
+  const overlay = document.getElementById('lightbox-overlay');
+  if (e.target.tagName !== 'IMG' && overlay) {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initGallery();
+});
+
+/* ── External Links Management ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const links = document.querySelectorAll('a');
+  links.forEach(link => {
+    const href = link.getAttribute('href');
+    // If the link is external (starts with http:// or https://)
+    if (href && (href.startsWith('http://') || href.startsWith('https://'))) {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    }
+  });
+});
