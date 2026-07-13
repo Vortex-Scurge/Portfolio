@@ -30,15 +30,20 @@
   <div class="nav-overlay" id="nav-overlay"></div>
 
   <!-- Resume -->
-  <div class="resume-container">
+  <section class="resume-container section" id="resume">
     <div class="container">
       <span class="section-label">// Resume</span>
       <h1>My Resume</h1>
-      <p class="resume-desc">Download my resume or view it below.</p>
+      <p class="fade-in resume-desc" style="max-width: 600px; margin: 0 auto; margin-bottom: 20px;">
+        A comprehensive overview of my academic background, full-stack development skills, and professional experience in software engineering and cybersecurity. Feel free to download a copy or view it directly below.
+      </p>
+      <blockquote class="fade-in" style="margin: 0 auto; margin-bottom: 40px; border-left: 4px solid var(--accent); padding-left: 15px; font-style: italic; color: var(--text-secondary); max-width: 600px; padding: 15px; text-align: left;">
+        "Your resume is your catalog of capabilities. Make it count."
+      </blockquote>
 
       <!-- RESUME BUTTONS — update href to your resume file path -->
-      <div class="resume-actions">
-        <a href="images/resume.pdf" download class="btn btn-primary">
+      <div class="resume-actions fade-in">
+        <a href="images/resume.pdf" download="Aravindan_Resume.pdf" class="btn btn-primary">
           <i class="fas fa-download"></i> Download PDF
         </a>
         <a href="images/resume.pdf" target="_blank" class="btn btn-outline">
@@ -48,11 +53,18 @@
 
       <!-- RESUME PREVIEW -->
       <div class="resume-preview fade-in">
-        <iframe src="images/resume.pdf" style="width:100%; height:800px; border:1px solid var(--border-color); border-radius:var(--radius-md);"></iframe>
+        <object data="images/resume.pdf" type="application/pdf" style="width:100%; height:800px; border:3px solid var(--border-color); border-radius:0;">
+          <div style="padding: 40px; text-align: center; border: 3px solid var(--border-color);">
+            <p>Your browser cannot display the PDF preview.</p>
+            <a href="images/resume.pdf" target="_blank" class="btn btn-primary" style="margin-top: 20px;">Click here to view it</a>
+          </div>
+        </object>
       </div>
 
       <!-- Quick Summary -->
-      <div style="margin-top: 60px; text-align: left;">
+      </section>
+      <section class="section" id="summary" style="padding-top: 60px; text-align: left;">
+        <div class="container">
         <div class="section-header fade-in">
           <span class="section-label">// Quick Summary</span>
           <h2 class="section-title" style="font-size: 1.8rem;">Highlights</h2>
@@ -95,6 +107,17 @@
           </div>
         </div>
       </div>
+        </div>
+        </div>
+      </section>
+
+  <!-- Scroll Navigation (Right Side) -->
+  <div class="scroll-nav">
+    <div class="scroll-nav-line" data-target="#resume">
+      <div class="scroll-nav-tooltip">Resume</div>
+    </div>
+    <div class="scroll-nav-line" data-target="#summary">
+      <div class="scroll-nav-tooltip">Summary</div>
     </div>
   </div>
 

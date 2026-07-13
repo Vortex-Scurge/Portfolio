@@ -33,16 +33,32 @@
   <div class="nav-overlay" id="nav-overlay"></div>
 
   <!-- Page Header -->
-  <div class="page-header">
+  <div class="page-header" style="padding-top: 150px;">
     <div class="container">
-      <span class="section-label">// My Work</span>
-      <h1>Projects</h1>
-      <p>Security tools, encryption systems, and cybersecurity projects I've built to learn and practice.</p>
+      <div class="header-split-layout">
+        <div class="header-text-content">
+          <span class="section-label">// Projects</span>
+          <h1 class="page-title">My Projects</h1>
+          <p class="fade-in" style="color: var(--text-secondary); max-width: 600px; margin-bottom: 20px;">
+            This page contains a detailed breakdown of the software applications, full-stack architectures, and cybersecurity tools I've built. Each project represents a deep dive into specific technical domains like modern web development, cryptography, and secure system design.
+          </p>
+          <blockquote class="fade-in" style="margin-top: 20px; border-left: 4px solid var(--accent); padding-left: 15px; font-style: italic; color: var(--text-secondary); max-width: 600px; padding: 15px;">
+            "Security is not a product, but a process." <br>— Bruce Schneier
+          </blockquote>
+        </div>
+        
+        <div class="header-image-content fade-in-right">
+          <div class="water-image-container">
+            <!-- Save your square image as images/projects.png (800x800px) -->
+            <img src="images/projects.png" alt="Projects">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- Filter & Projects -->
-  <section class="section" style="padding-top: 20px;">
+  <section class="section" id="portfolio" style="padding-top: 20px;">
     <div class="container">
       <div class="filter-bar fade-in">
         <button class="filter-btn active" data-filter="all">All</button>
@@ -139,7 +155,9 @@
       </div>
 
       <!-- Upcoming Projects -->
-      <div style="margin-top: 60px;" class="fade-in">
+      </section>
+      <section class="section" id="upcoming">
+      <div style="margin-top: 60px;" class="container fade-in">
         <div class="section-header">
           <span class="section-label">// Coming Soon</span>
           <h2 class="section-title" style="font-size: 1.8rem;">Planned Projects</h2>
@@ -178,6 +196,19 @@
       </div>
     </div>
   </section>
+
+  <!-- Scroll Navigation (Right Side) -->
+  <div class="scroll-nav">
+    <div class="scroll-nav-line" data-target="#projects-header">
+      <div class="scroll-nav-tooltip">Intro</div>
+    </div>
+    <div class="scroll-nav-line" data-target="#portfolio">
+      <div class="scroll-nav-tooltip">Portfolio</div>
+    </div>
+    <div class="scroll-nav-line" data-target="#upcoming">
+      <div class="scroll-nav-tooltip">Upcoming</div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="footer">

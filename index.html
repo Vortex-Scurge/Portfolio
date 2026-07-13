@@ -35,37 +35,40 @@
 
   <!-- Hero Section -->
   <section class="hero" id="hero">
-    <div class="container">
-      <div class="hero-content fade-in">
-        <span class="hero-greeting">Hello, World!</span>
-        <h1 class="hero-name glitch" data-text="I'm Aravindan">I'm <span class="gradient-text">Aravindan</span></h1>
-        <div class="hero-title">
-          <span id="typed-text">Cybersecurity Student</span><span class="cursor"></span>
-        </div>
-        <p class="hero-desc">
-          I am a Computer Science student focused on cybersecurity and ethical hacking.
-          I spend most of my time learning web security, penetration testing, and Linux systems,
-          and I build security tools and small projects to understand how attacks and defenses work.
-          My goal is to become a red teamer and security researcher.
+    <div class="container hero-top">
+      <h1 class="hero-headline fade-in">
+        <div class="scramble-line">CYBERSECURITY</div>
+        <div class="scramble-line" style="color: var(--accent);">STUDENT & HACKER</div>
+      </h1>
+      
+      <div class="hero-quote fade-in" style="margin: 40px auto 30px auto; max-width: 800px; padding-left: 20px; border-left: 4px solid var(--accent); text-align: left;">
+        <p style="font-family: var(--font-body); font-size: 1.2rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 15px; font-style: italic;">
+          "I want to be financially free so I can build whatever I think of. Even if I know it won't work, I'll build it anyway because I want to. And if it fails miserably, it shouldn't stop me from building the next thing."
         </p>
-        <div class="hero-buttons">
-          <a href="projects.html" class="btn btn-primary">
-            <i class="fas fa-code"></i> Projects
-          </a>
-          <a href="resume.html" class="btn btn-outline">
-            <i class="fas fa-file-alt"></i> Resume
-          </a>
-          <a href="https://github.com/Vortex-Scurge" target="_blank" class="btn btn-outline">
-            <i class="fab fa-github"></i> GitHub
-          </a>
-          <a href="https://www.linkedin.com/in/aravindan-ravichandran-2b2144337/" target="_blank"
-            class="btn btn-outline">
-            <i class="fab fa-linkedin"></i> LinkedIn
-          </a>
-          <a href="contact.html" class="btn btn-ghost">
-            <i class="fas fa-envelope"></i> Contact
-          </a>
+        <p style="font-family: var(--font-mono); font-size: 1rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px;">
+          — ME
+        </p>
+      </div>
+
+      <div class="hero-cta-wrapper fade-in" style="display: flex; justify-content: center; margin-bottom: 20px;">
+        <a href="#contact" class="hero-cta">
+          GET IN TOUCH <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-bottom container fade-in">
+      <div class="grid-container" id="draggable-container">
+        <!-- Central Portrait -->
+        <div class="portrait-container">
+          <!-- TODO: PLACE YOUR PORTRAIT PHOTO HERE -->
+          <!-- Replace the file below with your vertical portrait photo (400x500px) -->
+          <img src="images/hero-portrait.png" alt="Aravindan" class="portrait-img">
         </div>
+
+
+
+
       </div>
     </div>
   </section>
@@ -102,20 +105,18 @@
           <div class="about-card">
             <div class="about-card-icon">🔐</div>
             <h4>Focus Areas</h4>
-            <p>Ethical Hacking, Red Teaming, Web Application Security, Penetration Testing, Security Tools Development
+            <p>Ethical Hacking, Full-Stack Web Development, Red Teaming, Software Architecture, Penetration Testing
             </p>
           </div>
           <div class="about-card">
             <div class="about-card-icon">🛠️</div>
             <h4>Currently Learning</h4>
-            <p>Burp Suite & PortSwigger Labs, TryHackMe Paths, Linux Privilege Escalation, Python for Security Tools,
-              Bug Bounty Basics</p>
+            <p>React & Node.js, Burp Suite & PortSwigger, Linux Privilege Escalation, Python Backend Engineering, Web Security</p>
           </div>
           <div class="about-card">
             <div class="about-card-icon">🎯</div>
             <h4>Career Goal</h4>
-            <p>Build a career in cybersecurity — especially in ethical hacking and red teaming, working on real-world
-              security testing and tool development.</p>
+            <p>Build a career bridging the gap between security and engineering — developing robust software systems while aggressively testing and securing them.</p>
           </div>
         </div>
       </div>
@@ -324,7 +325,8 @@
           <div class="project-card-header">
             <span class="project-card-badge">Full-Stack / Security</span>
             <h3>HackFare Arena</h3>
-            <p>A real-time competitive 1v1 cybersecurity matchmaking arena. Players race to breach dynamically provisioned target containers in an isolated environment.</p>
+            <p>A real-time competitive 1v1 cybersecurity matchmaking arena. Players race to breach dynamically
+              provisioned target containers in an isolated environment.</p>
           </div>
           <div class="project-card-body">
             <div class="project-tech">
@@ -344,7 +346,8 @@
           <div class="project-card-header">
             <span class="project-card-badge">AI / Security</span>
             <h3>DevPilot Engineering Intelligence</h3>
-            <p>An AI-powered automated static analysis and code review system. It clones repositories, runs deep security scans, and generates intelligent vulnerability reports using LLMs.</p>
+            <p>An AI-powered automated static analysis and code review system. It clones repositories, runs deep
+              security scans, and generates intelligent vulnerability reports using LLMs.</p>
           </div>
           <div class="project-card-body">
             <div class="project-tech">
@@ -378,14 +381,16 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
         <!-- Column 1: Professional Experience -->
         <div>
-          <h3 style="margin-bottom: 24px; color: var(--accent); font-family: var(--font-heading); font-size: 1.3rem;">Professional Experience</h3>
+          <h3 style="margin-bottom: 24px; color: var(--accent); font-family: var(--font-heading); font-size: 1.3rem;">
+            Professional Experience</h3>
           <div class="timeline">
             <div class="timeline-item fade-in">
               <span class="timeline-date">May 2026 – Present</span>
               <div class="timeline-card">
                 <h3>AI Agent Dev Intern</h3>
                 <div class="timeline-org">TheFenixAI</div>
-                <p>Currently developing an agentic AI system for intelligent resume scoring using deep content awareness and contextual analysis. Orchestrating LLMs to automate complex parsing and evaluation workflows.</p>
+                <p>Currently developing an agentic AI system for intelligent resume scoring using deep content awareness
+                  and contextual analysis. Orchestrating LLMs to automate complex parsing and evaluation workflows.</p>
                 <div style="margin-top: 16px;">
                   <a href="#" class="btn btn-ghost btn-sm" onclick="event.preventDefault();">
                     <i class="fab fa-linkedin"></i> LinkedIn Post (Coming Soon)
@@ -404,14 +409,20 @@
                   <li>Worked with security tools and Linux systems</li>
                   <li>Practiced identifying common vulnerabilities and security issues</li>
                 </ul>
+                <div style="margin-top: 16px;">
+                  <a href="https://www.linkedin.com/posts/aravindan-ravichandran-2b2144337_cybersecurity-internship-internzvalley-activity-7278272990664429569-GZlJ" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
+                    <i class="fab fa-linkedin"></i> View LinkedIn Post
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        
+
         <!-- Column 2: Self-Paced Learning -->
         <div>
-          <h3 style="margin-bottom: 24px; color: var(--accent); font-family: var(--font-heading); font-size: 1.3rem;">Self-Paced Learning</h3>
+          <h3 style="margin-bottom: 24px; color: var(--accent); font-family: var(--font-heading); font-size: 1.3rem;">
+            Self-Paced Learning</h3>
           <div class="timeline">
             <div class="timeline-item fade-in">
               <span class="timeline-date">2024 – Present</span>

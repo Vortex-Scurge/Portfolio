@@ -86,24 +86,49 @@ function updateActiveNav() {
 
 /* ── Scroll Animations (IntersectionObserver) ── */
 function initScrollAnimations() {
-  const elements = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
+  const sections = document.querySelectorAll('section, .page-header, .hero, .project-detail-header, .project-detail-section, article, .blog-post, .blog-post-header, .blog-post-content');
 
-  if (!elements.length) return;
+  if (!sections.length) return;
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
+      const animElements = Array.from(entry.target.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right'));
+      
+      // If the target itself has the fade-in class, add it to the array
+      if (entry.target.matches('.fade-in, .fade-in-left, .fade-in-right')) {
+        animElements.push(entry.target);
+      }
+      
+      let titles = Array.from(entry.target.querySelectorAll('h1:not(.hero-headline), h2.section-title, .scramble-line'));
+      
+      // Also handle the case where the section ITSELF is the title (though unlikely, it's safe)
+      if (entry.target.matches('h1:not(.hero-headline), h2.section-title, .scramble-line')) {
+        titles = [entry.target];
+      }
+
       if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+        animElements.forEach(el => el.classList.add('visible'));
+        titles.forEach(title => {
+          if (!title.hasAttribute('data-scrambled')) {
+            if (!title.dataset.original) {
+                title.dataset.original = title.innerText;
+            }
+            const fx = new TextScramble(title);
+            fx.setText(title.dataset.original);
+            title.setAttribute('data-scrambled', 'true');
+          }
+        });
       } else {
-        entry.target.classList.remove('visible');
+        animElements.forEach(el => el.classList.remove('visible'));
+        // Do not remove data-scrambled, let the text scramble only once to prevent infinite intersection glitching
       }
     });
   }, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -40px 0px'
+    threshold: 0,
+    rootMargin: '0px'
   });
 
-  elements.forEach(el => observer.observe(el));
+  sections.forEach(section => observer.observe(section));
 }
 
 /* ── Smooth Scroll for anchor links ── */
@@ -129,10 +154,10 @@ function initTypedText() {
 
   const strings = [
     'Cybersecurity Student',
+    'Full-Stack Developer',
     'Ethical Hacker',
-    'Red Teaming Enthusiast',
-    'Security Tools Developer',
-    'Bug Bounty Learner'
+    'Software Engineer',
+    'Security Tools Builder'
   ];
 
   let stringIndex = 0;
@@ -347,27 +372,7 @@ class TextScramble {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const titles = document.querySelectorAll('h1, h2.section-title');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        if (!entry.target.hasAttribute('data-scrambled')) {
-          if (!entry.target.dataset.original) {
-              entry.target.dataset.original = entry.target.innerText;
-          }
-          const fx = new TextScramble(entry.target);
-          fx.setText(entry.target.dataset.original);
-          entry.target.setAttribute('data-scrambled', 'true');
-        }
-      } else {
-        entry.target.removeAttribute('data-scrambled');
-      }
-    });
-  }, { threshold: 0.1 });
-  
-  titles.forEach(t => observer.observe(t));
-});
+// Text scramble observer removed - now handled by initScrollAnimations
 
 function initSpotlight() {
   const cards = document.querySelectorAll('.project-card, .about-card, .skill-category, .timeline-card, .achievement-card, .tool-item');
@@ -393,6 +398,24 @@ function initScrollNav() {
       const targetSection = document.querySelector(targetId);
       if (targetSection) {
         targetSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // Force reload animations when nav bar is clicked
+        const animElements = targetSection.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right');
+        animElements.forEach(el => {
+          el.classList.remove('visible');
+          void el.offsetWidth; // Force a reflow
+          el.classList.add('visible');
+        });
+
+        const titles = targetSection.querySelectorAll('h1:not(.hero-headline), h2.section-title, .scramble-line');
+        titles.forEach(title => {
+          if (!title.dataset.original) {
+              title.dataset.original = title.innerText;
+          }
+          const fx = new TextScramble(title);
+          fx.setText(title.dataset.original);
+          title.setAttribute('data-scrambled', 'true');
+        });
       }
     });
   });
@@ -501,4 +524,305 @@ document.addEventListener('DOMContentLoaded', () => {
       link.setAttribute('rel', 'noopener noreferrer');
     }
   });
+});
+
+/* ── Interactive Draggable Stickers with Physics (Brutalist Theme) ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const draggables = document.querySelectorAll('.drag-item');
+  const container = document.getElementById('draggable-container');
+  if (!draggables.length || !container) return;
+
+  const containerW = container.offsetWidth || 1000;
+  const containerH = container.offsetHeight || 600;
+
+  const state = new Map();
+  const numItems = draggables.length;
+
+  draggables.forEach((item, index) => {
+    const itemW = item.offsetWidth || 100;
+    const itemH = item.offsetHeight || 50;
+    
+    const cx = containerW / 2;
+    const cy = containerH / 2;
+
+    // Distribute angles evenly to form a ring around the portrait, with some random variance
+    const baseAngle = (index / numItems) * Math.PI * 2;
+    const angle = baseAngle + (Math.random() - 0.5) * 0.5; 
+    
+    // Ensure they spawn far enough away from the center portrait (radius)
+    const rx = 280 + Math.random() * 120;
+    const ry = 220 + Math.random() * 100;
+
+    let randomX = cx + Math.cos(angle) * rx - (itemW / 2);
+    let randomY = cy + Math.sin(angle) * ry - (itemH / 2);
+
+    // Clamp to container edges to prevent them from spawning fully outside
+    randomX = Math.max(20, Math.min(containerW - itemW - 20, randomX));
+    randomY = Math.max(20, Math.min(containerH - itemH - 20, randomY));
+    
+    let randomRot = (Math.random() - 0.5) * 60; // -30 to 30 deg
+
+    item.style.position = 'absolute';
+    item.style.left = '0px';
+    item.style.top = '0px';
+    item.style.transform = `translate3d(${randomX}px, ${randomY}px, 0) rotate(${randomRot}deg)`;
+    
+    state.set(item, {
+      x: randomX, y: randomY,
+      velX: (Math.random() - 0.5) * 4,
+      velY: (Math.random() - 0.5) * 4,
+      lastMouseX: 0, lastMouseY: 0,
+      grabOffsetX: 0, grabOffsetY: 0,
+      initialLeft: 0,
+      initialTop: 0,
+      currentRot: randomRot,
+      baseRot: randomRot,
+      targetRot: randomRot,
+      isDragging: false,
+      scale: 1,
+      targetScale: 1
+    });
+
+    item.addEventListener('mousedown', (e) => dragStart(e, item));
+    item.addEventListener('touchstart', (e) => dragStart(e, item), { passive: false });
+    
+    item.addEventListener('mouseenter', () => {
+      if (!state.get(item).isDragging) state.get(item).targetScale = 1.05;
+    });
+    item.addEventListener('mouseleave', () => {
+      if (!state.get(item).isDragging) state.get(item).targetScale = 1;
+    });
+  });
+
+  let activeItem = null;
+  let highestZIndex = 50;
+
+  document.addEventListener('mousemove', drag);
+  document.addEventListener('touchmove', drag, { passive: false });
+  document.addEventListener('mouseup', dragEnd);
+  document.addEventListener('touchend', dragEnd);
+
+  function dragStart(e, item) {
+    if (!item.classList.contains('drag-item')) return;
+    activeItem = item;
+    
+    let clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+    let clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+    const s = state.get(activeItem);
+    s.isDragging = true;
+    s.targetScale = 1.1;
+    
+    highestZIndex++;
+    activeItem.style.zIndex = highestZIndex;
+
+    const rect = activeItem.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    s.grabOffsetX = clientX - centerX;
+    s.grabOffsetY = clientY - centerY;
+    s.lastMouseX = clientX;
+    s.lastMouseY = clientY;
+  }
+
+  function drag(e) {
+    if (!activeItem) return;
+    e.preventDefault();
+    
+    let clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+    let clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+    const s = state.get(activeItem);
+    
+    s.velX = clientX - s.lastMouseX;
+    s.velY = clientY - s.lastMouseY;
+    
+    s.x += s.velX;
+    s.y += s.velY;
+    
+    // Torque physics: cross product of offset and velocity
+    const torque = (s.grabOffsetX * s.velY - s.grabOffsetY * s.velX) * 0.05;
+    s.targetRot = s.baseRot + torque;
+    
+    s.lastMouseX = clientX;
+    s.lastMouseY = clientY;
+  }
+
+  function dragEnd(e) {
+    if (!activeItem) return;
+    const s = state.get(activeItem);
+    s.isDragging = false;
+    s.targetScale = 1;
+    s.targetRot = s.baseRot; 
+    activeItem = null;
+  }
+
+  function updatePhysics() {
+    const containerW = container.offsetWidth;
+    const containerH = container.offsetHeight;
+
+    draggables.forEach(item => {
+      const s = state.get(item);
+      
+      if (!s.isDragging) {
+        // Friction
+        s.velX *= 0.94;
+        s.velY *= 0.94;
+        
+        s.x += s.velX;
+        s.y += s.velY;
+      }
+      
+      // Calculate boundaries
+      let currentLeft = s.initialLeft + s.x;
+      let currentTop = s.initialTop + s.y;
+      const itemW = item.offsetWidth;
+      const itemH = item.offsetHeight;
+      
+      // X boundaries
+      if (currentLeft < 0) {
+        s.x = -s.initialLeft;
+        s.velX *= -0.7; // Bounce
+      } else if (currentLeft + itemW > containerW) {
+        s.x = containerW - itemW - s.initialLeft;
+        s.velX *= -0.7;
+      }
+
+      // Y boundaries
+      if (currentTop < 0) {
+        s.y = -s.initialTop;
+        s.velY *= -0.7;
+      } else if (currentTop + itemH > containerH) {
+        s.y = containerH - itemH - s.initialTop;
+        s.velY *= -0.7;
+      }
+
+      // Arch Corner Boundaries (400px radius)
+      let cx = s.initialLeft + s.x + itemW / 2;
+      let cy = s.initialTop + s.y + itemH / 2;
+      const cornerR = 400;
+      const r = Math.max(itemW, itemH) / 2;
+      const maxDist = cornerR - r;
+
+      // Top-Left Arch
+      if (cx < cornerR && cy < cornerR) {
+        const dx = cx - cornerR;
+        const dy = cy - cornerR;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > maxDist) {
+          const nx = dx / dist;
+          const ny = dy / dist;
+          cx = cornerR + nx * maxDist;
+          cy = cornerR + ny * maxDist;
+          s.x = cx - itemW / 2 - s.initialLeft;
+          s.y = cy - itemH / 2 - s.initialTop;
+          const dot = s.velX * nx + s.velY * ny;
+          s.velX = (s.velX - 2 * dot * nx) * 0.7;
+          s.velY = (s.velY - 2 * dot * ny) * 0.7;
+        }
+      }
+
+      // Top-Right Arch
+      if (cx > containerW - cornerR && cy < cornerR) {
+        const dx = cx - (containerW - cornerR);
+        const dy = cy - cornerR;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > maxDist) {
+          const nx = dx / dist;
+          const ny = dy / dist;
+          cx = (containerW - cornerR) + nx * maxDist;
+          cy = cornerR + ny * maxDist;
+          s.x = cx - itemW / 2 - s.initialLeft;
+          s.y = cy - itemH / 2 - s.initialTop;
+          const dot = s.velX * nx + s.velY * ny;
+          s.velX = (s.velX - 2 * dot * nx) * 0.7;
+          s.velY = (s.velY - 2 * dot * ny) * 0.7;
+        }
+      }
+    });
+
+    // Handle Collisions between stickers
+    const items = Array.from(draggables);
+    for (let i = 0; i < items.length; i++) {
+      for (let j = i + 1; j < items.length; j++) {
+        const s1 = state.get(items[i]);
+        const s2 = state.get(items[j]);
+        
+        const r1 = Math.max(items[i].offsetWidth, items[i].offsetHeight) / 2;
+        const r2 = Math.max(items[j].offsetWidth, items[j].offsetHeight) / 2;
+        
+        const cx1 = s1.initialLeft + s1.x + items[i].offsetWidth / 2;
+        const cy1 = s1.initialTop + s1.y + items[i].offsetHeight / 2;
+        const cx2 = s2.initialLeft + s2.x + items[j].offsetWidth / 2;
+        const cy2 = s2.initialTop + s2.y + items[j].offsetHeight / 2;
+        
+        const dx = cx2 - cx1;
+        const dy = cy2 - cy1;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const minDist = r1 + r2;
+        
+        if (dist < minDist && dist > 0) {
+          const nx = dx / dist;
+          const ny = dy / dist;
+          const overlap = minDist - dist;
+          
+          // Resolve overlap
+          if (!s1.isDragging && !s2.isDragging) {
+            s1.x -= nx * overlap * 0.5;
+            s1.y -= ny * overlap * 0.5;
+            s2.x += nx * overlap * 0.5;
+            s2.y += ny * overlap * 0.5;
+          } else if (s1.isDragging) {
+            s2.x += nx * overlap;
+            s2.y += ny * overlap;
+          } else if (s2.isDragging) {
+            s1.x -= nx * overlap;
+            s1.y -= ny * overlap;
+          }
+          
+          // Bounce velocities
+          const rVelX = s2.velX - s1.velX;
+          const rVelY = s2.velY - s1.velY;
+          const dot = rVelX * nx + rVelY * ny;
+          
+          if (dot < 0) {
+            const restitution = 0.5;
+            const impulse = -(1 + restitution) * dot / 2; // Assuming equal mass
+            
+            if (!s1.isDragging) {
+              s1.velX -= impulse * nx;
+              s1.velY -= impulse * ny;
+            }
+            if (!s2.isDragging) {
+              s2.velX += impulse * nx;
+              s2.velY += impulse * ny;
+            }
+          }
+        }
+      }
+    }
+    
+    // Apply transforms
+    draggables.forEach(item => {
+      const s = state.get(item);
+      // Smoothly interpolate rotation and scale
+      s.currentRot += (s.targetRot - s.currentRot) * 0.15;
+      s.scale += (s.targetScale - s.scale) * 0.2;
+      
+      item.style.transform = `translate3d(${s.x}px, ${s.y}px, 0) rotate(${s.currentRot}deg) scale(${s.scale})`;
+    });
+    
+    requestAnimationFrame(updatePhysics);
+  }
+  
+  updatePhysics();
+});
+
+/* ── Anti-Copy Protection ── */
+document.addEventListener('contextmenu', (e) => e.preventDefault());
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && (e.key === 'c' || e.key === 'C' || e.key === 'x' || e.key === 'X' || e.key === 'u' || e.key === 'U')) {
+    e.preventDefault();
+  }
 });

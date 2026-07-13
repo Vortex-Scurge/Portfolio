@@ -30,17 +30,41 @@
   <div class="nav-overlay" id="nav-overlay"></div>
 
   <!-- Page Header -->
-  <div class="page-header">
+  <section class="section" id="journey-header" style="padding-top: calc(var(--nav-height) + 60px);">
     <div class="container">
-      <span class="section-label">// Experience</span>
-      <h1>My Journey</h1>
-      <p>Internships, self-learning, security research, and platform practice.</p>
+      <div class="header-split-layout">
+        <div class="header-text-content">
+          <div class="section-header fade-in">
+            <span class="section-label">// Experience</span>
+            <h1 class="section-title">My Journey</h1>
+            <div class="section-divider"></div>
+          </div>
+          <p class="fade-in" style="color: var(--text-secondary); max-width: 600px; margin-bottom: 20px;">
+            A chronological look at my professional internships and projects bridging software engineering and cybersecurity, from full-stack development to penetration testing and security research.
+          </p>
+          <blockquote class="fade-in" style="margin-top: 20px; border-left: 4px solid var(--accent); padding-left: 15px; font-style: italic; color: var(--text-secondary); max-width: 600px; padding: 15px;">
+            "Experience is simply the name we give our mistakes." <br>— Oscar Wilde
+          </blockquote>
+        </div>
+
+        <div class="header-image-content fade-in-right">
+          <div class="water-image-container">
+            <!-- Save your square image as images/expi.png (800x800px) -->
+            <img src="images/expi.png" alt="Experience">
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- Stats -->
-  <section class="section" style="padding-top: 20px; padding-bottom: 40px;">
+  <section class="section" id="stats" style="padding-top: 20px; padding-bottom: 40px;">
     <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">// Overview</span>
+        <h2 class="section-title">Stats</h2>
+        <div class="section-divider"></div>
+      </div>
       <div class="exp-page-grid fade-in" style="grid-template-columns: repeat(4, 1fr);">
         <div class="exp-stat-card">
           <div class="exp-stat-number">4</div>
@@ -63,7 +87,7 @@
   </section>
 
   <!-- Internship -->
-  <section class="section" style="padding-top: 0;">
+  <section class="section" id="work" style="padding-top: 0;">
     <div class="container">
       <div class="section-header fade-in">
         <span class="section-label">// Work</span>
@@ -109,7 +133,7 @@
   </section>
 
   <!-- Self-Learning -->
-  <section class="section">
+  <section class="section" id="self-learning">
     <div class="container">
       <div class="section-header fade-in">
         <span class="section-label">// Self-Learning</span>
@@ -135,7 +159,7 @@
   </section>
 
   <!-- Platforms & Practice -->
-  <section class="section">
+  <section class="section" id="platforms">
     <div class="container">
       <div class="section-header fade-in">
         <span class="section-label">// Platforms</span>
@@ -174,6 +198,25 @@
       </div>
     </div>
   </section>
+
+  <!-- Scroll Navigation (Right Side) -->
+  <div class="scroll-nav">
+    <div class="scroll-nav-line" data-target="#journey-header">
+      <div class="scroll-nav-tooltip">Journey</div>
+    </div>
+    <div class="scroll-nav-line" data-target="#stats">
+      <div class="scroll-nav-tooltip">Stats</div>
+    </div>
+    <div class="scroll-nav-line" data-target="#work">
+      <div class="scroll-nav-tooltip">Work</div>
+    </div>
+    <div class="scroll-nav-line" data-target="#self-learning">
+      <div class="scroll-nav-tooltip">Learning</div>
+    </div>
+    <div class="scroll-nav-line" data-target="#platforms">
+      <div class="scroll-nav-tooltip">Platforms</div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="footer">

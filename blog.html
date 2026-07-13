@@ -30,16 +30,35 @@
   <div class="nav-overlay" id="nav-overlay"></div>
 
   <!-- Page Header -->
-  <div class="page-header">
+  <section class="section" id="blog-header" style="padding-top: calc(var(--nav-height) + 60px);">
     <div class="container">
-      <span class="section-label">// Blog & Writeups</span>
-      <h1>Blog</h1>
-      <p>CTF writeups, cybersecurity research, learning notes, and project build explanations.</p>
+      <div class="header-split-layout">
+        <div class="header-text-content">
+          <div class="section-header fade-in">
+            <span class="section-label">// Blog & Writeups</span>
+            <h1 class="section-title">Blog</h1>
+            <div class="section-divider"></div>
+          </div>
+          <p class="fade-in" style="color: var(--text-secondary); max-width: 600px; margin-bottom: 20px;">
+            A collection of technical articles covering everything from software engineering tutorials and architecture deep-dives to CTF writeups and security vulnerability research.
+          </p>
+          <blockquote class="fade-in" style="margin-top: 20px; border-left: 4px solid var(--accent); padding-left: 15px; font-style: italic; color: var(--text-secondary); max-width: 600px; padding: 15px;">
+            "If you want to master something, teach it." <br>— Richard Feynman
+          </blockquote>
+        </div>
+
+        <div class="header-image-content fade-in-right">
+          <div class="water-image-container">
+            <!-- Save your square image as images/blog.png (800x800px) -->
+            <img src="images/blog.png" alt="Blog">
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- Blog Grid -->
-  <section class="section" style="padding-top: 20px;">
+  <section class="section" id="blog" style="padding-top: 20px;">
     <div class="container">
       <div class="filter-bar fade-in">
         <button class="filter-btn active" data-filter="all">All</button>
@@ -136,6 +155,16 @@
       </div>
     </div>
   </section>
+
+  <!-- Scroll Navigation (Right Side) -->
+  <div class="scroll-nav">
+    <div class="scroll-nav-line" data-target="#blog-header">
+      <div class="scroll-nav-tooltip">Intro</div>
+    </div>
+    <div class="scroll-nav-line" data-target="#blog">
+      <div class="scroll-nav-tooltip">Blog</div>
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="footer">
