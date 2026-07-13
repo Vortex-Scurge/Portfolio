@@ -113,14 +113,21 @@ function initScrollAnimations() {
             if (!title.dataset.original) {
                 title.dataset.original = title.innerText;
             }
-            const fx = new TextScramble(title);
-            fx.setText(title.dataset.original);
+            if (!title.fx) {
+              title.fx = new TextScramble(title);
+            }
+            title.fx.setText(title.dataset.original);
             title.setAttribute('data-scrambled', 'true');
           }
         });
       } else {
         animElements.forEach(el => el.classList.remove('visible'));
-        // Do not remove data-scrambled, let the text scramble only once to prevent infinite intersection glitching
+        titles.forEach(title => {
+          title.removeAttribute('data-scrambled');
+          if (title.fx) {
+            // Optional: reset it to original immediately if desired, but just removing data-scrambled allows it to replay later
+          }
+        });
       }
     });
   }, {
